@@ -1,0 +1,25 @@
+{
+  "name": "gc-guerra-clas-cr",
+  "version": "1.0.0",
+  "description": "Aplicação web para organizar, consultar e analisar informações da Guerra de Clãs do Clash Royale.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Andrehlb/gc-guerra-clas-cr.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "UNLICENSED",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Andrehlb/gc-guerra-clas-cr/issues"
+  },
+  "homepage": "https://github.com/Andrehlb/gc-guerra-clas-cr#readme",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  }
+}
