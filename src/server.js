@@ -7,7 +7,7 @@ app.get("/",(req, res)=>{
     res.send(`
         <html>
             <head><meta charset="UTF-8"></head>
-            <body>GC ⚔️ Guerra de Clãs, API rodando</body>Z
+            <body>GC ⚔️ Guerra de Clãs, API rodando</body>
         </html>
     `);
 });
