@@ -1,5 +1,6 @@
 const express = require('express');
-const PORT = 3000;
+const appConfig = require('./config/appConfig'); 
+
 const app = express();
 
 app.get("/",(req, res)=>{
@@ -7,15 +8,13 @@ app.get("/",(req, res)=>{
     res.send(`
         <html>
             <head><meta charset="UTF-8"></head>
-            <body>GC ⚔️ Guerra de Clãs, API rodando</body>
+            <body>${appConfig.appName} ⚔️ ${appConfig.appContext} rodando</body>
         </html>
     `);
 });
 
-const HOST = "127.0.0.1";
-
-const server = app.listen(PORT, HOST, ()=>{
-    console.log(`Servidor rodando em http://${HOST}:${PORT}`);
+const server = app.listen(appConfig.port, appConfig.host, () => {
+    console.log(`Servidor rodando em http://${appConfig.host}:${appConfig.port}`);
 });
 
 server.on("error", (error)=>{
