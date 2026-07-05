@@ -1,7 +1,10 @@
 const express = require('express');
-const appConfig = require('./config/appConfig'); 
+const appConfig = require('./config/appConfig');
+const healthRoutes = require('./routes/HealthRoutes');
 
 const app = express();
+
+app.use(healthRoutes);
 
 app.get("/",(req, res)=>{
     res.setHeader("Content-Type", "text/html; charset=utf-8");

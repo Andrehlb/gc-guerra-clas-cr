@@ -144,3 +144,29 @@ vite.config.ts.timestamp-*
 
 # AI - Agent
 .codex
+.codex/
+.codex/*
+.codex/**/*
+.codex/**/.*.lock
+.codex/**/.*.lock.json
+.codex/**/.*.lock.yaml
+.codex/**/.*.lock.yml
+.codex/**/.*.lock.toml
+.codex/**/.*.lock.json5
+.codex/**/.*.lock.jsonc
+.codex/**/.*.lock.jsonnet
+.codex/**/.*.lock.jsonl
+.codex/**/.*.lock.jsonlines
+.codex/**/.*.lock.jsonld
+.codex/**/.*.lock.jsonschema
+.codex/**/.*.lock.jsonschema.json
+.codex/**/.*.lock.jsonschema.yaml
+.codex/**/.*.lock.jsonschema.yml
+.codex/**/.*.lock.jsonschema.toml
+.codex/**/.*.lock.jsonschema.json5
+.codex/**/.*.lock.jsonschema.jsonc
+.codex/**/.*.lock.jsonschema.jsonnet
+.codex/**/.*.lock.jsonschema.jsonl
+.codex/**/.*.lock.jsonschema.jsonlines
+.codex/**/.*.lock.jsonschema.jsonld
+.codex/**/.*.lock.jsonschema.jsonschema
