@@ -1,0 +1,8 @@
+[
+    {
+        "id": 1,
+        "name": "Clã Exemplo",
+        "tag": "#ABC123",
+        "description": "Clã inicial para teste da API"
+    }
+]

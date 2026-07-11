@@ -99,6 +99,19 @@ const status = HealthService.getHealthStatus()
 * arquivos públicos/static
 * HTML, CSS, JS, imagens, se houver interface web simples
 
+##### O Fluxo Completo (A Cadeia)
+
+Veja como o dado flui:
+
+1. **Controller** (Recebe o pedido do usuário): "Liste os clãs!"
+   * Chama: `ClanService.listClans()`
+2. **Service** (Decide a regra): "Ok, vou buscar todos."
+   * Chama: `ClanRepository.findAll()`
+3. **Repository** (Busca a dados): "Aqui estão os dados."
+   * Devolve: `clans` (o array do JSON)
+4. **Service** (Recebe): Pega o array e devolve para o Controller.
+5. **Controller** (Responde): Envia o array em JSON para o usuário.
+
 ## Item 2 — Regra de negócio do projeto
 
 A regra de negócio é **o que o sistema precisa fazer para resolver o problema real do usuário**.
