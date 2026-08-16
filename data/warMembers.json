@@ -1,0 +1,20 @@
+{
+  "warConfig": {
+    "season": "2026-07",
+    "weeksCount": 4,
+    "battlesExpectedPerWeek": 4
+  },
+  "members": [
+    {
+      "name": "Player1",
+      "tag": "#PLAYER1",
+      "role": "leader",
+      "weeks": {
+        "1": 4,
+        "2": 3,
+        "3": 4,
+        "4": 2
+      }
+    }
+  ]
+}

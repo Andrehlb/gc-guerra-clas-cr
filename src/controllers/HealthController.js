@@ -1,4 +1,4 @@
-const HealthService = require("../services/HealthService");
+const HealthService = require('../services/HealthService');
 
 function getHealth(req, res){
     const status = HealthService.getHealthStatus();

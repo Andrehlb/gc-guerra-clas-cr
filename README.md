@@ -11,6 +11,8 @@ gc-guerra-clas-cr/
 ├── README.md
 ├── public/
 ├── data/
+│   ├── clans.json
+│   └── warMembers.json
 └── src/
     ├── server.js
     ├── config/
@@ -18,20 +20,24 @@ gc-guerra-clas-cr/
     ├── routes/
     │   ├── HealthRoutes.js
     │   ├── ClanRoutes.js
+    │   ├── WarMemberRoutes.js
     │   ├── WarRoutes.js
     │   └── PlayerRoutes.js
     ├── controllers/
     │   ├── HealthController.js
     │   ├── ClanController.js
+    │   ├── WarMemberController.js
     │   ├── WarController.js
     │   └── PlayerController.js
     ├── services/
     │   ├── HealthService.js
     │   ├── ClanService.js
+    │   ├── WarMemberService.js
     │   ├── WarService.js
     │   └── PlayerService.js
     └── repositories/
         ├── ClanRepository.js
+        ├── WarMemberRepository.js
         ├── WarRepository.js
         └── PlayerRepository.js
 ```
@@ -178,6 +184,90 @@ Dados de desempenho.
 Gerar resultados de consultas e dashboards das análises.
 ```
 
+**Identificação:** para o escopo atual, o modelo melhor é usar a `tag` do jogador como identificador principal. Usar `id: 1`, `id: 2` fica artificial para o domínio do Clash Royale.
+
+Modelo melhor para agora, sem exagerar:
+
+```json
+{
+  "warConfig": {
+    "season": "2026-07",
+    "weeksCount": 4,
+    "battlesExpectedPerWeek": 4
+  },
+  "members": [
+    {
+      "name": "Jogador Exemplo 1",
+      "tag": "#PLAYER1",
+      "role": "leader",
+      "weeks": {
+        "1": 4,
+        "2": 3,
+        "3": 4,
+        "4": 2
+      }
+    },
+    {
+      "name": "Jogador Exemplo 2",
+      "tag": "#PLAYER2",
+      "role": "member",
+      "weeks": {
+        "1": 4,
+        "2": 4,
+        "3": 3,
+        "4": 4
+      }
+    }
+  ]
+}
+```
+
+Esse modelo é melhor que o anterior porque:
+
+```text
+battlesExpectedPerWeek fica em um lugar só
+
+tag vira o identificador principal
+
+cada membro guarda só o que fez
+
+o service calcula total, faltas e status
+```
+
+O modelo ainda mais escalável seria guardar batalha por batalha, assim:
+
+```json
+{
+  "warConfig": {
+    "season": "2026-07",
+    "battlesExpectedPerWeek": 4
+  },
+  "members": [
+    {
+      "name": "Jogador Exemplo 1",
+      "tag": "#PLAYER1",
+      "role": "leader"
+    }
+  ],
+  "battles": [
+    {
+      "playerTag": "#PLAYER1",
+      "week": 1,
+      "battleNumber": 1,
+      "done": true
+    },
+    {
+      "playerTag": "#PLAYER1",
+      "week": 1,
+      "battleNumber": 2,
+      "done": true
+    }
+  ]
+}
+```
+
+Mas para o seu momento atual, eu não usaria ainda o modelo de batalha bruta. Ele é melhor para sistema maduro, mas vai complicar a primeira tela.
+
 ## Item 3 — Rotas do backend
 
 No momento, no código, tem apenas uma rota implementada:
@@ -194,21 +284,22 @@ Para o projeto **Guerra de Clãs do Clash Royale**, as rotas reais devem represe
 
 A primeira versão das rotas poderia ser esta:
 
-| Método  | Rota                       | Função                              |
-| -------- | -------------------------- | ------------------------------------- |
-| `GET`  | `/`                      | Verificar se o servidor está rodando |
-| `GET`  | `/health`                | Verificar status técnico da API      |
-| `GET`  | `/clans`                 | Listar clãs cadastrados              |
-| `GET`  | `/clans/:id`             | Buscar um clã específico            |
-| `POST` | `/clans`                 | Cadastrar um clã                     |
-| `GET`  | `/players`               | Listar jogadores                      |
-| `GET`  | `/players/:id`           | Buscar um jogador específico         |
-| `POST` | `/players`               | Cadastrar jogador                     |
-| `GET`  | `/wars`                  | Listar guerras registradas            |
-| `GET`  | `/wars/:id`              | Buscar uma guerra específica         |
-| `POST` | `/wars`                  | Registrar uma guerra                  |
-| `GET`  | `/wars/:id/participants` | Listar participantes de uma guerra    |
-| `GET`  | `/analytics/war-summary` | Ver resumo/análise das guerras       |
+| Método  | Rota                       | Função                                                     |
+| -------- | -------------------------- | ------------------------------------------------------------ |
+| `GET`  | `/`                      | Verificar se o servidor está rodando                        |
+| `GET`  | `/health`                | Verificar status técnico da API                             |
+| `GET`  | `/clans`                 | Listar clãs cadastrados                                     |
+| `GET`  | `/clans/:id`             | Buscar um clã específico                                   |
+| `POST` | `/clans`                 | Cadastrar um clã                                            |
+| `GET`  | `/war-members/summary`   | Listar membros da GC com semanas, total de batalhas e status |
+| `GET`  | `/players`               | Listar jogadores                                             |
+| `GET`  | `/players/:id`           | Buscar um jogador específico                                |
+| `POST` | `/players`               | Cadastrar jogador                                            |
+| `GET`  | `/wars`                  | Listar guerras registradas                                   |
+| `GET`  | `/wars/:id`              | Buscar uma guerra específica                                |
+| `POST` | `/wars`                  | Registrar uma guerra                                         |
+| `GET`  | `/wars/:id/participants` | Listar participantes de uma guerra                           |
+| `GET`  | `/analytics/war-summary` | Ver resumo/análise das guerras                              |
 
 A organização em arquivos ficaria assim:
 
@@ -216,6 +307,7 @@ A organização em arquivos ficaria assim:
 src/routes/
 ├── HealthRoutes.js
 ├── ClanRoutes.js
+├── WarMemberRoutes.js
 ├── PlayerRoutes.js
 ├── WarRoutes.js
 └── AnalyticsRoutes.js
@@ -226,6 +318,10 @@ Exemplo de divisão:
 ```text
 ClanRoutes.js
 → rotas sobre clãs
+
+WarMemberRoutes.js
+→ rota para listar participação dos membros na Guerra de Clãs
+→ mostra semanas, total de batalhas e status
 
 PlayerRoutes.js
 → rotas sobre jogadores
@@ -605,3 +701,12 @@ public/
 ```
 
 Assim eu consego abrir no navegador e ver algo visual sem complicar o projeto.
+
+## **Participação dos membros na Guerra de Clãs**
+
+```
+Membro          Semana 1   Semana 2   Semana 3   Semana 4   Total   Status
+Jogador A       4/4        4/4        3/4        4/4        15      fez
+Jogador B       0/4        2/4        0/4        1/4        3       não fez tudo
+Jogador C       0/4        0/4        0/4        0/4        0       não fez
+```
