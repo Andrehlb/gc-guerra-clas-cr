@@ -2,11 +2,15 @@ const express = require('express');
 const appConfig = require('./config/appConfig');
 const healthRoutes = require('./routes/HealthRoutes');
 const clanRoutes = require('./routes/ClanRoutes');
+const warMemberRoutes = require('./routes/WarMemberRoutes');
 
 const app = express();
 
+app.use(express.static('public'));
+
 app.use(healthRoutes);
 app.use(clanRoutes);
+app.use(warMemberRoutes);
 
 app.get('/',(req, res)=>{
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
