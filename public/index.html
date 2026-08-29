@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Guerra de Clãs do Clash Royale</title>
+
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <h1>⚔️  Guerra de Clãs (GC) ⚔️</h1>
+        <div>
+            <label for="language-selector">Idioma:</label>
+            <select id="language-selector" name="language">
+            <option value="pt-BR">Português pt-BR</option>
+            <option value="en">English en-US</option>
+            <option value="es">Español es-ES</option>
+            <option value="zh-CN">中文 zh-CN</option>
+            <option value="ja">日本語 ja-JP</option>
+            <option value="ko">한국어 ko-KR</option>
+            <option value="ru">Русский ru-RU</option>
+    </select>
+        </div>
+        <p>Batalhas do dia na GC ⚔️</p>
+
+            <div class="player-search">
+                <div class="floating-field">
+                    <!-- Campo de pesquisa/busca de clã -->
+                    <form id="clan-search-form">
+                        <input
+                            id="clan-search"
+                            type="text"
+                            placeholder="Tag do Clã, com 8 letras, ex: #YVUURCPR"
+                        >
+
+                        <button type="submit">
+                            Buscar Clã
+                        </button>
+
+                        <button type="button" id="clear-clan-search">
+                            Limpar pesquisa de Clã
+                        </button>
+                    </form>
+
+                    <p id="clan-search-feedback"></p>
+
+                    <!-- Campo de pesquisa/busca de jogador -->
+                    <input
+                        type="search"
+                        id="player-search"
+                        name="player-search"
+                        placeholder=" "
+                        autoComplete="off"
+                    >
+                    <label for="player-search">
+                        Pesquisar jogador por nome ou tag #
+                    </label>
+
+                    <button type="button" id="search-player">
+                        Buscar jogador
+                    </button>
+                </div>
+
+                <button type="button" id="clear-player-search">
+                    Limpar a busca de jogador
+                </button>
+
+                <p id="player-search-feedback" aria-live="polite"></p>
+            </div>
+
+    </header>
+
+    <main>
+        <section
+            id="war-members-section"
+            aria-labelledby="war-members-title"
+            hidden
+        >
+            <h2 id="war-members-title">Participantes da GC ⚔️</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Jogador</th>
+                        <th scope="col">Batalhas <br>feitas</th>
+                        <th scope="col">Batalhas <br>não feitas</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="war-members-table-body">
+                    <!-- Conteúdo da tabela será preenchido dinamicamente -->
+                </tbody>
+            </table>
+        </section>
+        <section aria-labelledby="donation-title">
+            <h2 id="donation-title">Faz um Pix para manter o site</h2>
+
+            <p>
+                A contribuição voluntária ajuda a manter a infraestrutura e a evolução do site.
+            </p>
+
+            <figure>
+                <img
+                    src="/assets/pix-qrcode-itau.jpeg"
+                    alt="QR Code para contribuição voluntária por PIX"
+                    width="300"
+                    height="300"
+                >
+
+                <figcaption>
+                    Escaneie o QR Code com o celular <br>para doar 2 ou 5 ou 10 ou 20 ou 50 reais <br>para apoiar a manutenção do site.
+                </figcaption>
+            </figure>
+        </section>
+    </main>
+</body>
+</html>
