@@ -27,8 +27,10 @@ async function getCurrentRiverRace(clanTagParam) {
 
     // console.log('Supercell resposta:', errorBody);
 
-    if (!response.status === 401 || response.status === 403) {
-        throw new Error('Falha de autuenticação na SuperCell (${response.status}).');
+    if (response.status === 401 || response.status === 403) {
+        throw new Error(
+            `Falha de autenticação na SuperCell (${response.status}).`
+        );
     }
 
     if (response.status === 404) {
@@ -40,7 +42,7 @@ async function getCurrentRiverRace(clanTagParam) {
     }
 
     if (!response.ok) {
-        throw new Error('Erro na API da Supercell: HTTP ${response.status}');
+        throw new Error(`Erro na API da Supercell: HTTP ${response.status}`);
     }
 
     const data = await response.json();
