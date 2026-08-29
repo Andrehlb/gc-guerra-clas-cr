@@ -1,8 +1,11 @@
-const SupercellRepository = require ('../repositories/SupercellRepository');
+const SupercellRepository = require('../repositories/SupercellRepository');
 
-async function getCurrentWarMembers(playerTag = null) {
-    const members = await SupercellRepository.getClanMembers();
-    const riverRace = await SupercellRepository.getCurrentRiverRace();
+async function getCurrentWarMembers(
+    playerTag = null,
+    clanTag = null
+) {
+    const members = await SupercellRepository.getClanMembers(clanTag);
+    const riverRace = await SupercellRepository.getCurrentRiverRace(clanTag);
     // console.log('periodType recebido:', riverRace?.periodType);
     const isTrainingDay = riverRace?.periodType === 'training';
 
@@ -21,7 +24,7 @@ async function getCurrentWarMembers(playerTag = null) {
         const battlesDone = Number(participant?.decksUsedToday || 0);
         const battlesMissing = isTrainingDay
             ? 0
-            :  Math.max(0, 4 - battlesDone);
+            : Math.max(0, 4 - battlesDone);
 
         let status;
 
@@ -44,13 +47,17 @@ async function getCurrentWarMembers(playerTag = null) {
         };
     });
 
-    if (!playerTag) {
-        return result;
-    }
+    const filteredMembers = playerTag
+        ? result.filter((member) => member.tag === playerTag)
+        : result;
 
-    return result.filter(
-        (member) => member.tag === playerTag
-    );
+    return {
+        clan: {
+            name: riverRace?.clan?.name || 'Clã não encontrado',
+            tag: riverRace?.clan?.tag || clanTag,
+        },
+        members: filteredMembers,
+    };
 }
 
 module.exports = {

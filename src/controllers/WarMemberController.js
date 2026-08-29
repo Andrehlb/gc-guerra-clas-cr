@@ -3,8 +3,12 @@ const WarMemberService = require('../services/WarMemberService');
 async function getCurrent(req, res) {
     try {
         const playerTag = req.query.playerTag || null;
-        
-        const data = await WarMemberService.getCurrentWarMembers(playerTag);
+        const clanTag = req.query.clanTag || null;
+
+        const data = await WarMemberService.getCurrentWarMembers(
+            playerTag,
+            clanTag
+        );
 
         return res.status(200).json(data);
     } catch (error) {
