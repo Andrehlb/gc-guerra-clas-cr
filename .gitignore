@@ -170,3 +170,10 @@ vite.config.ts.timestamp-*
 .codex/**/.*.lock.jsonschema.jsonlines
 .codex/**/.*.lock.jsonschema.jsonld
 .codex/**/.*.lock.jsonschema.jsonschema
+
+# Application runtime persistence
+data/runtime/
+
+# Local development notes
+*.txt
+
