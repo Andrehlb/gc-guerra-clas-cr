@@ -4,7 +4,8 @@
   "description": "Aplicação web para organizar, consultar e analisar informações da Guerra de Clãs do Clash Royale.",
   "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "test": "node --test"
   },
   "repository": {
     "type": "git",
