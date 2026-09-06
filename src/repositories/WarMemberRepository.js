@@ -17,10 +17,12 @@ function createEmptyHistory() {
     };
 }
 
-async function readHistory() {
+async function readHistory(
+    filePath = historyFilePath
+) {
     try {
         const fileContent = await fs.readFile(
-            historyFilePath,
+            filePath,
             'utf-8'
         );
 
@@ -34,12 +36,17 @@ async function readHistory() {
     }
 }
 
-async function writeHistory(history) {
-    await fs.mkdir(runtimeDirectoryPath, {
+async function writeHistory(
+    history,
+    filePath = historyFilePath
+) {
+    const directoryPath = path.dirname(filePath);
+
+    await fs.mkdir(directoryPath, {
         recursive: true,
     });
 
-    const temporaryFilePath = `${historyFilePath}.tmp`;
+    const temporaryFilePath = `${filePath}.tmp`;
     const fileContent = `${JSON.stringify(history, null, 2)}\n`;
 
     await fs.writeFile(
@@ -50,14 +57,15 @@ async function writeHistory(history) {
 
     await fs.rename(
         temporaryFilePath,
-        historyFilePath
+        filePath
     );
 }
 
 async function synchronizeClanMembers(
     clanTag,
     members,
-    observedAt = new Date().toISOString()
+    observedAt = new Date().toISOString(),
+    filePath = historyFilePath
 ) {
     if (!clanTag) {
         throw new Error(
@@ -65,7 +73,7 @@ async function synchronizeClanMembers(
         );
     }
 
-    const history = await readHistory();
+    const history = await readHistory(filePath);
 
     history.clans ??= {};
 
@@ -87,7 +95,7 @@ async function synchronizeClanMembers(
         };
     }
 
-    await writeHistory(history);
+    await writeHistory(history, filePath);
 
     return members.map((member) => ({
         ...member,
