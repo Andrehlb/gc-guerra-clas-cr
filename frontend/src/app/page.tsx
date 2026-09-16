@@ -1,67 +1,103 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
 import styles from "./page.module.css";
 
+function formatDateLabel(date: Date) {
+  const formatter = new Intl.DateTimeFormat("pt-BR");
+  const formattedDate = formatter.format(date);
+  const formattedToday = formatter.format(new Date());
+
+  return formattedDate === formattedToday
+    ? `hoje, ${formattedDate}`
+    : `na data ${formattedDate}`;
+}
+
 export default function Home() {
+  const [selectedDate] = useState<Date | null>(null);
+  
+  const dateLabel = selectedDate
+    ? formatDateLabel(selectedDate)
+    : "hoje";
+
   return (
     <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.tsx</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+      <header className={styles.header}>
+        <div className={styles.headerContent}>
+          <div className={styles.brand}>
+            <div className={styles.crownBadge} aria-hidden="true">
+              ♛
+            </div>
+
+            <div>
+              <p className={styles.eyebrow}>
+                Game Clash Royale • Projeto Independente
+              </p>
+
+              <h1>Guerra de Clãs ⚔️</h1>
+
+              <p className={styles.subtitle}>
+                Pesquise o jogador que não fez as batalhas na GC ⚔️
+              </p>
+            </div>
+          </div>
+
+          <label className={styles.language}>
+            <span>Idioma</span>
+
+            <select defaultValue="pt-BR">
+              <option value="pt-BR">Português</option>
+              <option value="en-US">English</option>
+              <option value="es-ES">Español</option>
+              <option value="zh-CN">中文</option>
+              <option value="ja-JP">日本語</option>
+              <option value="ru-RU">Русский</option>
+              <option value="ir-IR">فارسی</option>
+              <option value="arabic">العربية</option>
+              <option value="it-IT">Italiano</option>
+            </select>
+          </label>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </header>
+
+      <main className={styles.main}>
+        <div className={styles.content}>
+          <section
+            className={styles.searchCard}
+            aria-labelledby="clan-search-title"
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <div className={styles.cardHeading}>
+              <p>Aqui é feita a consulta da Guerra de Clãs ⚔️</p>
+              <h2 id="clan-search-title">Encontre aqui o seu Clã</h2>
+
+              <span>
+                Digite a tag do seu clã para ver todos os jogadores que participaram da Guerra de Clãs, {dateLabel} ⚔️
+              </span>
+            </div>
+
+            <form className={styles.searchForm}>
+              <label htmlFor="clan-tag">Tag do Clã</label>
+
+              <div className={styles.searchRow}>
+                <input
+                  id="clan-tag"
+                  name="clantag"
+                  type="text"
+                  autoComplete="off"
+                  spellCheck="false"
+                />
+
+                <button type="button">
+                  <span aria-hidden="true">🔍</span>
+                  Buscar Clã
+                </button>
+              </div>
+
+              <p className={styles.hint}>
+                A tag começa com # e você encontra no perfil do Clã
+              </p>
+            </form>
+          </section>
         </div>
       </main>
     </div>
