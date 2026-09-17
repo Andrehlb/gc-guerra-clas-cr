@@ -98,7 +98,10 @@ Decisões já definidas:
 - pesquisa pública por clã ou jogador;
 - temas claro e escuro;
 - suporte a vários idiomas;
-- acessibilidade e responsividade;
+- acessibilidade e responsividade, com HTML semântico, labels associados corretamente aos campos, textos alternativos para imagens, navegação completa por teclado e foco visível, contraste adequado, informação de erro/sucesso que não dependa apenas de cor, suporte a redução de movimento, redimensionamento/zoom de texto, ARIA quando necessário em componentes dinâmicos, mensagens de erro claras, critérios WCAG e validação com Lighthouse;
+- opção manual de alto contraste acessível por controle visual e teclado;
+- possibilidade futura e complementar de ativar e desativar alto contraste por comando de voz, sempre com alternativa visual/teclado: o comando de voz nunca será o único meio disponível;
+- caso sejam adicionados vídeos, áudios ou conteúdos multimídia, necessidade de legendas, transcrições e, quando aplicável, recursos em Libras;
 - perfil individual de jogador;
 - futuro chat autenticado do clã;
 - anúncios isolados da área funcional;
@@ -281,31 +284,41 @@ Informações de acesso público só devem ser documentadas aqui depois de valid
 
 Concluído no desenvolvimento da nova interface:
 
-- preparação segura e conferência das alterações anteriores;
+- validação/sincronização segura e verificação/revisão de integridade das alterações locais anteriores;
 - remoção do carregamento automático de clã na interface;
 - definição da arquitetura com Next.js, React, TypeScript e CSS Modules;
 - criação da aplicação Next.js em `frontend/`;
 - validação com ESLint e build;
 - configuração da exportação estática para `frontend/out`;
 - definição e registro do protótipo visual versão 1;
-- definição dos ativos visuais principais: coroa, cenário do cabeçalho e fundo claro.
+- definição dos ativos visuais principais: coroa, cenário do cabeçalho e fundo claro;
+- 5.2 Salvar e conferir as imagens: concluída.
+- 5.3 Verificar e otimizar os arquivos: concluída;
+- versões PNG e WebP dos ativos principais adicionadas ao projeto;
+- 6.1 Estruturar a área principal da nova interface: concluída;
+- largura principal ajustada para até `1120px`;
+- estrutura `main → content → section` implementada;
+- validação final da etapa com `npm run lint` e `npm run build`.
 
 Etapa atual:
 
 ```text
-Etapa 5 — Preparar os ativos visuais
-└── 5.2 Salvar e conferir as imagens
+Etapa 6 — Construir a interface em React
+└── 6.2 Aplicar o fundo geral da nova interface
 ```
 
-Arquivos previstos:
+Os principais ativos visuais já estão disponíveis em `frontend/public/assets/`:
 
 ```text
 frontend/public/assets/crown-royale-original.png
+frontend/public/assets/crown-royale-original.webp
 frontend/public/assets/royale-arena-hero.png
+frontend/public/assets/royale-arena-hero.webp
 frontend/public/assets/royale-page-background-light.png
+frontend/public/assets/royale-page-background-light.webp
 ```
 
-Depois da conferência dos arquivos, a próxima atividade é verificar dimensões, peso, formato, transparência, proporção, qualidade visual e local correto de uso antes de iniciar as alterações de CSS.
+A próxima etapa aplicará o fundo geral da interface usando os ativos já preparados e validados, mantendo responsividade, acessibilidade e separação entre estrutura e apresentação.
 
 ## Contribuição
 
