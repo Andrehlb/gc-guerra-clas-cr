@@ -15,10 +15,15 @@ function formatDateLabel(date: Date) {
 
 export default function Home() {
   const [selectedDate] = useState<Date | null>(null);
+  const [clanTag, setClanTag] = useState("");
   
   const dateLabel = selectedDate
     ? formatDateLabel(selectedDate)
     : "hoje";
+  
+  async function handleClanSearch(e: React.SyntheticEvent<HTMLFormElement>) {
+    e.preventDefault()
+  }
 
   return (
     <div className={styles.page}>
@@ -75,7 +80,7 @@ export default function Home() {
               </span>
             </div>
 
-            <form className={styles.searchForm}>
+            <form className={styles.searchForm} onSubmit={handleClanSearch}>
               <label htmlFor="clan-tag">Tag do Clã</label>
 
               <div className={styles.searchRow}>
@@ -85,9 +90,11 @@ export default function Home() {
                   type="text"
                   autoComplete="off"
                   spellCheck="false"
+                  value={clanTag}
+                  onChange={(e) => setClanTag(e.target.value)}
                 />
 
-                <button type="button">
+                <button type="submit">
                   <span aria-hidden="true">🔍</span>
                   Buscar Clã
                 </button>
