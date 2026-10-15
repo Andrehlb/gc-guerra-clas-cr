@@ -177,3 +177,5 @@ data/runtime/
 # Local development notes
 *.txt
 
+# Local Excalidraw diagrams
+*.excalidraw
